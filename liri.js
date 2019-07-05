@@ -30,26 +30,34 @@ var spotify = new spotify(keys.spotify);
 // liri's event listeners (1-4):
 // 1. 'concert-this':
 //     will return user (name of venue, venue location, date of event-format mm/dd/yyyy);
-// 2. 'spotify-this-song':
-//     will return user (name of artist, song's name, preview link of the song from spotify, album that the song is from);
+// 2. 'spotify-this-song':done
+// Helper functions(a-d):
+//     a) will return user (name of artist),
 var uiArtist = function(artist) {
     return artist.name;
 };
-spotify.search({
-    type: 'track',
-    query: 'My Search Query'
-},function(err, data){
-    if (err){
-        return console.log('Error: ' + err);
+//     b) will return user with (song's name),
+var uiSong = function(songName){
+    if (songName === undefined){
+        return console.log("Error: " && err);
+        return;
+    }
+    var song = data.tracks.items; 
+    var data = [];
+    for (var i = 0; i < song.length; i++){
+        data.push({
+            "arist(s): ": song[i].artists.map(uiArtist),
+            "song name: ": song[i].name,
+//     c) will return user (preview link of the song from spotify, album that the song is from);
+            "preview song: ": song[i].preview_url,
+//     d) will return user with(album that the song is from);
+            "album: ": song[i].album.name
+        });
     }
     console.log(data);
-});
-spotify.search({
-    type: uiArtist,
-    query: 'all the small things'
-}.catch(function(err){
-    console.log(err);
-})
+    writeLog(data);
+};
+
 
 // 3. 'movie-this':
 //     will return user {
@@ -70,12 +78,11 @@ spotify.search({
 //         }
 
 // Bonus:
-// {
-
 //     output the data to a txt.file called "log.txt"
 var writeLog = function(data){
 
 //     append each command you run to the log.txt file
+//     do not overwrite your file each time you run a command
 fs.appendFile("log.txt", JSON.stringify(data) + "\n", function(err) {
     if (err) {
         return console.log(err);
@@ -83,6 +90,9 @@ fs.appendFile("log.txt", JSON.stringify(data) + "\n", function(err) {
     console.log("Last UI successfully added to log.txt");
     });
 };
-//     do not overwrite your file each time you run a command
-// }
-runInput(process.argv[2], process.argv.slice(3).joing(" "));
+
+
+var runUI = function(argvOne, argvTwo){
+    pick(argvOne, argvTwo);
+};
+runUI(process.argv[2], process.argv.slice(3).joing(" "));
