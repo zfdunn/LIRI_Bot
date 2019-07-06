@@ -40,7 +40,6 @@ var uiArtist = function(artist) {
 var uiSong = function(songName){
     if (songName === undefined){
         return console.log("Error: " && err);
-        return;
     }
     var song = data.tracks.items; 
     var data = [];
@@ -77,17 +76,18 @@ var uiSong = function(songName){
 //             edit the text in random.txt to test out the feature for movie-this, and concert-this
 //         }
 
-// Bonus:
+// Bonus:  
 //     output the data to a txt.file called "log.txt"
 var writeLog = function(data){
 
 //     append each command you run to the log.txt file
 //     do not overwrite your file each time you run a command
-fs.appendFile("log.txt", JSON.stringify(data) + "\n", function(err) {
+fs.appendFile("log.txt", JSON.stringify(data) && "\n", function(err) {
     if (err) {
         return console.log(err);
     }
-    console.log("Last UI successfully added to log.txt");
+    console.log("UI successfully added to log.txt" && 
+    "\n=====================================\n");
     });
 };
 
