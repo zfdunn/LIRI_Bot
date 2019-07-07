@@ -56,9 +56,34 @@ var movie = function(movieName){
     };
 };
 // making axios requests to omdb 
-const urlApiKey = "=trilogy"
+const urlApiKey = "=8b568eef"
 var url = ("http://omdbapi.com/?t=" + movieName + "&y=&plot=full&tomatoes=true&apikey" + urlApiKey);
 axios.get(url).then(function(response) {
+    var jsonData = response.data;
+    // borrowing some of classmate's code
+//     will return user {
+    var data = {
+        //         title of movie, 
+        "Title: ": jsonData.Title,
+        //         year of movie, 
+        "Year: ": jsonData.Year,
+        //         rating of movie,
+        "Rated: ": jsonData.Rated,
+        //         imdb rating,
+        "IMDB Rating: ": jsonData.imdbRating,
+        //         country produced, 
+        "Country: ": jsonData.Country,
+        //         language of the movie, 
+        "Language: ": jsonData.Language, 
+        //         plot of the movie, 
+        "Plot: ": jsonData.Plot,
+        //         actors in the movie;
+        "Actors: ": jsonData.Actors,
+        //         rotten tomatoes rating of movie, 
+        "Rotten Tomatoes Raing: ": jsonData.Ratings[1].Value,
+    };
+    console.log(data);
+    writeLog;
     console.log("");
 }).catch(function(error){
     if (error) {
@@ -67,23 +92,7 @@ axios.get(url).then(function(response) {
         
     }
 })
-//     will return user {
-//         title of movie, 
-//         year of movie, 
-//         imdb rating,
-//         rotten tomatoes rating of movie, 
-//         country produced, 
-//         language of the movie, 
-//         plot of the movie, 
-//         actors in the movie;}
-
-
-
-
-
-
-    
-
+ 
 // 4. 'do-what-it-says':
 //             will return user
 //             spotify-this-song: "I want it that way", as follows in the text in random.txt,
