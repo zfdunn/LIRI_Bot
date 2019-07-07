@@ -1,3 +1,4 @@
+// not sure what this does; saw this was required while watching hw guide on youtube
 require("dotenv").config();
 // Add the code required to import the `keys.js` file and store it in a variable.
 var keys = require("./keys.js");
@@ -10,20 +11,7 @@ var Spotify = require("node-spotify-api");
 // initializing spotify keys
 var spotify = new spotify(keys.spotify);
 
-// making axios requests to omdb & bands in town
-// axios.get("http://omdbapi.com/?"
-// .then(function(response) {
-//     console.log("");
-// }).catch(function(error){
-//     if (error) {
-//         console.log("------Data-------");
-//         console.log(error.response.data);
-        
-//     }
-// });
 
-
-// };
 
 
 
@@ -56,9 +44,29 @@ var uiSong = function(songName){
     console.log(data);
     writeLog(data);
 };
-
+uiSong();
 
 // 3. 'movie-this':
+
+// movie search function;
+var movie = function(movieName){
+    if (movieName === undefined){
+//     if no movie is provided, default should return "MR. NOBODY";
+        movieName = "Mr. Nobody";
+    };
+};
+// making axios requests to omdb 
+const urlApiKey = "=trilogy"
+var url = ("http://omdbapi.com/?t=" + movieName + "&y=&plot=full&tomatoes=true&apikey" + urlApiKey);
+axios.get(url).then(function(response) {
+    console.log("");
+}).catch(function(error){
+    if (error) {
+        console.log("------Data-------");
+        console.log(error.response.data);
+        
+    }
+})
 //     will return user {
 //         title of movie, 
 //         year of movie, 
@@ -68,13 +76,31 @@ var uiSong = function(songName){
 //         language of the movie, 
 //         plot of the movie, 
 //         actors in the movie;}
-//     if no movie is provided, default should return "MR. NOBODY";
+
+
+
+
+
+
+    
 
 // 4. 'do-what-it-says':
-//         will return user{
+//             will return user
 //             spotify-this-song: "I want it that way", as follows in the text in random.txt,
 //             edit the text in random.txt to test out the feature for movie-this, and concert-this
-//         }
+    //         
+    var doWhatItSays = function(){
+        fs.readFile("random.txt", "utf8", function(err, data){
+            console.log(data);
+            var datA = data.split(",");
+            if (datA.length === 2){
+                pick (datA[0], datA[1]);
+                {else if (datA.length === 1){
+                    pick (datA[0]);    
+                };
+            };
+        };
+    });
 
 // Bonus:  
 //     output the data to a txt.file called "log.txt"
@@ -95,4 +121,4 @@ fs.appendFile("log.txt", JSON.stringify(data) && "\n", function(err) {
 var runUI = function(argvOne, argvTwo){
     pick(argvOne, argvTwo);
 };
-runUI(process.argv[2], process.argv.slice(3).joing(" "));
+runUI(process.argv[2], process.argv.slice(3).join(" "));
